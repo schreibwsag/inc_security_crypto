@@ -15,7 +15,7 @@
 /// PKCS#11 C API.
 ///
 /// Usage:
-///   init_softhsm_token --token-dir <dir> --config-path <path>
+///   init_pkcs11_token --token-dir <dir> --config-path <path>
 ///                      --token-label <label> --so-pin <pin> --user-pin <pin>
 ///
 /// The binary:
@@ -161,8 +161,8 @@ void WriteConfig(const Args& args)
     {
         throw std::runtime_error("setenv(SOFTHSM2_CONF) failed");
     }
-    std::cout << "[init_softhsm_token] Config written to " << args.configPath << "\n";
-    std::cout << "[init_softhsm_token] Token directory: " << args.tokenDir << "\n";
+    std::cout << "[init_pkcs11_token] Config written to " << args.configPath << "\n";
+    std::cout << "[init_pkcs11_token] Token directory: " << args.tokenDir << "\n";
 }
 
 /// @brief Obtain the PKCS#11 function list and initialise the library.
@@ -276,7 +276,7 @@ CK_SLOT_ID InitialiseTokenAndPin(CK_FUNCTION_LIST_PTR fl, CK_SLOT_ID slot, const
     fl->C_Logout(session);
     fl->C_CloseSession(session);
 
-    std::cout << "[init_softhsm_token] Token '" << args.tokenLabel << "' initialised successfully (slot " << tokenSlot
+    std::cout << "[init_pkcs11_token] Token '" << args.tokenLabel << "' initialised successfully (slot " << tokenSlot
               << ")\n";
     return tokenSlot;
 }
@@ -357,7 +357,7 @@ void ImportKeys(CK_FUNCTION_LIST_PTR fl, CK_SLOT_ID tokenSlot, const Args& args)
             fl->C_Finalize(nullptr);
             throw std::runtime_error("C_CreateObject failed for key '" + keyLabel + "': " + FormatRv(importRv));
         }
-        std::cout << "[init_softhsm_token] Imported key '" << keyLabel << "' from " << keyFile << " (object=" << obj
+        std::cout << "[init_pkcs11_token] Imported key '" << keyLabel << "' from " << keyFile << " (object=" << obj
                   << ")\n";
     }
 
@@ -389,7 +389,7 @@ int main(int argc, char** argv)
     }
     catch (const std::exception& ex)
     {
-        std::cerr << "[init_softhsm_token] ERROR: " << ex.what() << "\n";
+        std::cerr << "[init_pkcs11_token] ERROR: " << ex.what() << "\n";
         return 1;
     }
 }

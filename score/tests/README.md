@@ -60,15 +60,15 @@ pytest integration_test.py.py -v
 
 #### SoftHSM token initialisation
 
-The `init_softhsm_token` binary initialises a SoftHSM token and optionally
+The `init_pkcs11_token` binary initialises a SoftHSM token and optionally
 imports a pre-shared key:
 
 ```sh
 # Initialise token only:
-./init_softhsm_token --label "MyToken" --pin 1234 --so-pin 12345678
+./init_pkcs11_token --label "MyToken" --pin 1234 --so-pin 12345678
 
 # Initialise token and import an HMAC key:
-./init_softhsm_token --label "MyToken" --pin 1234 --so-pin 12345678 \
+./init_pkcs11_token --label "MyToken" --pin 1234 --so-pin 12345678 \
     --import-key-file /path/to/key.bin \
     --import-key-label "hmac_key" \
     --import-key-type GENERIC_SECRET
